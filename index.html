@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" id="favicon" />
+    <link rel="shortcut icon" id="shortcut-icon" />
+    <link rel="apple-touch-icon" id="apple-touch-icon" />
+    <title>Cardápio</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body class="carregando-cardapio carregando-perfil">
+    <div id="mensagem-topo-loja" class="mensagem-topo-loja"></div>
+
+    <header>
+      <a id="banner-link-loja" href="#" target="_blank" style="display: none">
+        <img id="banner-loja" class="banner-loja" alt="Banner da loja" />
+      </a>
+
+      <img
+        id="logo-loja"
+        class="logo"
+        alt="Logo da loja"
+        style="display: none"
+      />
+
+      <h1 id="nome-loja-cardapio"></h1>
+
+      <p id="descricao-loja-cardapio" class="descricao-loja-cardapio"></p>
+
+      <div class="resumo-loja-cardapio">
+  <div class="linha-horario-loja">
+    <div class="horario-hoje-loja">
+      <span class="icone-info-loja">⏰</span>
+      <span id="horario-hoje-cardapio">Carregando horário...</span>
+    </div>
+
+    <div id="status-horario" class="status-loja status-fechado">
+      <span class="bolinha-status-loja"></span>
+      <span id="texto-status-horario">Fechado</span>
+    </div>
+  </div>
+
+  <div id="info-loja-cardapio" class="info-loja-cardapio">
+    <span class="icone-info-loja">🕘</span>
+    <span id="tempo-preparo-cardapio"></span>
+
+    <span
+      id="separador-info-loja"
+      class="separador-info-loja"
+    >
+      •
+    </span>
+
+    <span id="pedido-minimo-cardapio"></span>
+  </div>
+</div>
+    </header>
+
+    <nav
+  id="menu-navegacao-categorias"
+  class="menu-navegacao-categorias"
+  aria-label="Categorias do cardápio"
+  style="display: none"
+>
+  <div
+    id="lista-navegacao-categorias"
+    class="lista-navegacao-categorias"
+  ></div>
+</nav>
+
+    <main id="menu-container"></main>
+
+    <section id="resumo-pedido">
+      <div class="carrinho-header">
+        <div>
+          <h2 id="titulo-etapa-carrinho">Seu Pedido</h2>
+          <span id="carrinho-header-qtd">0 itens</span>
+        </div>
+
+        <button type="button" id="fechar-carrinho" class="fechar-carrinho">
+          ✕
+        </button>
+      </div>
+
+      <!-- INDICADOR DAS ETAPAS -->
+      <div class="etapas-carrinho">
+        <div class="etapa-carrinho ativa" id="indicador-etapa-1">
+          <span>1</span>
+          <strong>Carrinho</strong>
+        </div>
+
+        <div class="linha-etapas-carrinho"></div>
+
+        <div class="etapa-carrinho" id="indicador-etapa-2">
+          <span>2</span>
+          <strong>Dados</strong>
+        </div>
+      </div>
+
+      <!-- ===================================== -->
+      <!-- ETAPA 1 — PRODUTOS, ENTREGA E VALORES -->
+      <!-- ===================================== -->
+
+      <div id="etapa-carrinho-1" class="etapa-conteudo-carrinho ativa">
+        <div id="pedido-itens"></div>
+
+        <section class="tipo-entrega-etapa-1 checkout-card">
+          <div id="box-tipo-entrega" class="box-tipo-entrega">
+            
+            <div class="opcoes-tipo-entrega">
+              <button
+                type="button"
+                id="btn-tipo-entrega"
+                class="tipo-entrega ativo"
+              >
+                Entrega
+              </button>
+
+              <button type="button" id="btn-tipo-retirada" class="tipo-entrega">
+                Retirada
+              </button>
+            </div>
+
+            <!-- RETIRADA NA ETAPA 1 -->
+            <div
+              id="box-info-retirada-etapa-1"
+              class="box-info-retirada"
+              style="display: none"
+            >
+              <strong>Endereço de retirada</strong>
+              <p id="texto-endereco-retirada-etapa-1"></p>
+            </div>
+
+            <!-- CEP RESUMIDO DA ETAPA 1 -->
+            <div id="box-cep-etapa-1" class="box-cep-etapa-1">
+              <label for="cep-carrinho">Consulte a entrega pelo CEP:</label>
+
+              <input
+                id="cep-carrinho"
+                type="text"
+                inputmode="numeric"
+                maxlength="9"
+                placeholder="00000-000"
+                autocomplete="postal-code"
+              />
+
+              <div id="status-cep-carrinho" class="status-cep-carrinho"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- CUPOM -->
+        <div class="cupom-area checkout-card">
+          <label for="cupom-input">Cupom de desconto:</label>
+
+          <div class="cupom-linha">
+            <input
+              id="cupom-input"
+              type="text"
+              placeholder="Digite seu cupom"
+              autocomplete="off"
+            />
+
+            <button id="aplicar-cupom" type="button">Aplicar</button>
+          </div>
+
+          <div id="cupom-mensagem"></div>
+        </div>
+
+        <!-- RESUMO FINANCEIRO DA ETAPA 1 -->
+        <div class="resumo-valores-carrinho">
+          <div class="linha-valor-carrinho">
+            <span>Subtotal</span>
+            <strong id="subtotal-etapa-1">R$0,00</strong>
+          </div>
+
+          <div class="linha-valor-carrinho">
+            <span>Frete</span>
+            <strong id="frete-etapa-1">R$0,00</strong>
+          </div>
+
+          <div
+            class="linha-valor-carrinho linha-desconto-carrinho"
+            id="linha-desconto-etapa-1"
+            style="display: none"
+          >
+            <span>Desconto</span>
+            <strong id="desconto-etapa-1">-R$0,00</strong>
+          </div>
+
+          <div class="linha-total-carrinho">
+            <span>Total</span>
+            <strong id="total-pedido">R$0,00</strong>
+          </div>
+        </div>
+
+        <div class="acoes-etapa-carrinho">
+          <button id="limpar-pedido" type="button" class="btn-secundario">
+            Limpar carrinho
+          </button>
+
+          <button id="continuar-pedido" type="button" class="btn-principal">
+            Continuar
+          </button>
+        </div>
+      </div>
+
+      <!-- ================================= -->
+      <!-- ETAPA 2 — DADOS E FINALIZAÇÃO     -->
+      <!-- ================================= -->
+
+      <div id="etapa-carrinho-2" class="etapa-conteudo-carrinho">
+        <section class="dados-cliente-etapa-2 checkout-card">
+          <h3>Dados do cliente</h3>
+
+          <div class="input-group compacto">
+            <div class="input-half">
+              <label for="nome-cliente">Nome:</label>
+
+              <input
+                id="nome-cliente"
+                type="text"
+                placeholder="Nome completo"
+                autocomplete="name"
+                required
+              />
+            </div>
+
+            <div class="input-half">
+              <label for="whatsapp-cliente">WhatsApp:</label>
+
+              <input
+                type="tel"
+                id="whatsapp-cliente"
+                name="whatsapp-cliente"
+                placeholder="(xx) xxxxx-xxxx"
+                autocomplete="tel"
+                required
+              />
+            </div>
+          </div>
+        </section>
+
+        <!-- ENTREGA NA ETAPA 2 -->
+        <section
+          id="dados-entrega-etapa-2"
+          class="address-section checkout-card"
+        >
+          <h3>Endereço de entrega</h3>
+
+          <div class="input-group compacto">
+            <div class="input-full">
+              <label for="cep-cliente">CEP:</label>
+
+              <input
+                id="cep-cliente"
+                type="text"
+                inputmode="numeric"
+                maxlength="9"
+                placeholder="00000-000"
+                autocomplete="postal-code"
+                required
+              />
+            </div>
+          </div>
+
+          <div id="status-cep-etapa-2" class="status-cep-carrinho"></div>
+
+          <div class="input-group compacto">
+            <div class="input-full">
+              <label for="rua-cliente">Endereço:</label>
+
+              <input
+                id="rua-cliente"
+                type="text"
+                placeholder="Rua, Av, etc."
+                readonly
+                required
+              />
+            </div>
+          </div>
+
+          <div class="input-group compacto">
+            <div class="input-half">
+              <label for="numero-cliente">Número:</label>
+
+              <input
+                id="numero-cliente"
+                type="text"
+                placeholder="Nº"
+                autocomplete="address-line2"
+                required
+              />
+            </div>
+
+            <div class="input-half">
+              <label for="complemento-cliente">Complemento:</label>
+
+              <input
+                id="complemento-cliente"
+                type="text"
+                placeholder="Opcional"
+                autocomplete="address-line2"
+              />
+            </div>
+          </div>
+
+          <div class="input-group compacto">
+            <div class="input-half">
+              <label for="bairro-cliente">Bairro:</label>
+
+              <input
+                id="bairro-cliente"
+                type="text"
+                placeholder="Bairro"
+                readonly
+                required
+              />
+            </div>
+
+            <div class="input-half">
+              <label for="cidade-cliente">Cidade:</label>
+
+              <input
+                id="cidade-cliente"
+                type="text"
+                placeholder="Cidade"
+                readonly
+                required
+              />
+            </div>
+          </div>
+        </section>
+
+        <!-- RETIRADA NA ETAPA 2 -->
+        <section
+          id="dados-retirada-etapa-2"
+          class="box-info-retirada checkout-card"
+          style="display: none"
+        >
+          <h3>Retirada no estabelecimento</h3>
+
+          <strong>Endereço de retirada</strong>
+
+          <p id="texto-endereco-retirada"></p>
+        </section>
+
+        <!-- RESUMO FINANCEIRO DA ETAPA 2 -->
+        <div class="resumo-valores-carrinho">
+          <div class="linha-valor-carrinho">
+            <span>Subtotal</span>
+            <strong id="subtotal-etapa-2">R$0,00</strong>
+          </div>
+
+          <div class="linha-valor-carrinho">
+            <span>Frete</span>
+            <strong id="frete-etapa-2">R$0,00</strong>
+          </div>
+
+          <div
+            class="linha-valor-carrinho linha-desconto-carrinho"
+            id="linha-desconto-etapa-2"
+            style="display: none"
+          >
+            <span>Desconto</span>
+            <strong id="desconto-etapa-2">-R$0,00</strong>
+          </div>
+
+          <div class="linha-total-carrinho">
+            <span>Total</span>
+            <strong id="total-etapa-2">R$0,00</strong>
+          </div>
+        </div>
+
+        <div class="acoes-etapa-carrinho">
+          <button
+            id="voltar-etapa-carrinho"
+            type="button"
+            class="btn-secundario"
+          >
+            Voltar
+          </button>
+
+          <button id="confirmar-pedido" type="button" class="btn-principal">
+            Finalizar Pedido
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <div id="modal-body"></div>
+      </div>
+    </div>
+
+    <div id="mensagem-adicionado" class="mensagem-adicionado">
+      Item adicionado ao carrinho!
+    </div>
+
+    <button id="carrinho-flutuante" class="carrinho-flutuante" type="button">
+      <span class="carrinho-info">
+        <span class="carrinho-icone">🛒</span>
+        <span id="carrinho-qtd">0 itens</span>
+      </span>
+
+      <span class="carrinho-total">
+        R$0,00 <span class="carrinho-seta">›</span>
+      </span>
+    </button>
+    <div id="overlay-carrinho" class="overlay-carrinho"></div>
+    <button
+      id="pedido-andamento-btn"
+      class="pedido-andamento-btn"
+      type="button"
+    >
+      📦 Pedido em andamento
+    </button>
+
+    <div id="overlay-acompanhamento" class="overlay-acompanhamento"></div>
+
+    <div id="modal-acompanhamento" class="modal-acompanhamento">
+      <div class="acompanhamento-card">
+        <button
+          id="fechar-acompanhamento"
+          class="fechar-acompanhamento"
+          type="button"
+        >
+          ✕
+        </button>
+
+        <div id="conteudo-acompanhamento"></div>
+      </div>
+    </div>
+    <footer id="rodape-loja" class="rodape-loja" style="display: none">
+      <a id="rodape-instagram" href="#" target="_blank" style="display: none">
+        <svg class="icone-social" viewBox="0 0 24 24">
+          <path
+            d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5zm10.5 3a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM12 7a5 5 0 110 10 5 5 0 010-10zm0 2a3 3 0 100 6 3 3 0 000-6z"
+          />
+        </svg>
+      </a>
+
+      <a id="rodape-whatsapp" href="#" target="_blank" style="display: none">
+        <svg class="icone-social" viewBox="0 0 24 24">
+          <path
+            d="M20 3.9A10 10 0 003.7 16.3L2 22l5.9-1.5A10 10 0 1020 3.9zm-8 16.1a8 8 0 01-4.1-1.1l-.3-.2-3.5.9.9-3.4-.2-.3A8 8 0 1112 20zm4.5-6c-.2-.1-1.3-.6-1.5-.7-.2-.1-.4-.1-.6.1l-.5.7c-.1.2-.3.2-.5.1a6.5 6.5 0 01-3.2-2.8c-.2-.3 0-.4.1-.5l.4-.5c.1-.2.1-.3 0-.5l-.7-1.6c-.2-.4-.3-.3-.5-.3h-.4c-.2 0-.5.1-.7.3s-.9.9-.9 2.1.9 2.4 1 2.6a11 11 0 004.2 3.8c2.5 1.1 2.5.7 2.9.7s1.3-.5 1.5-1 .2-1 .1-1.1-.2-.1-.5-.3z"
+          />
+        </svg>
+      </a>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="push.js"></script>
+    <!-- ===================================================== -->
+<!-- POPUP INSTALAÇÃO IOS -->
+<!-- ===================================================== -->
+
+<div
+  id="popup-instalacao-ios"
+  class="popup-instalacao-ios"
+  aria-hidden="true"
+>
+  <div class="popup-instalacao-ios-card">
+
+    <button
+      id="fechar-popup-instalacao-ios"
+      class="popup-instalacao-ios-fechar"
+      type="button"
+      aria-label="Fechar"
+    >
+      ✕
+    </button>
+
+    <div class="popup-instalacao-ios-logo">
+      <img
+        id="popup-ios-logo"
+        src=""
+        alt="Logo da loja"
+      />
+    </div>
+
+    <h2 id="popup-ios-titulo">
+  Adicione este cardápio à sua tela inicial
+</h2>
+
+<p id="popup-ios-texto">
+  Tenha acesso rápido ao cardápio e fique por dentro de novidades e promoções.
+</p>
+
+    <div class="popup-ios-passo">
+      <span class="popup-ios-numero">1</span>
+
+      <span>
+        Toque no botão
+        <strong>Compartilhar</strong>
+        <span class="popup-ios-icone">⬆️</span>
+      </span>
+    </div>
+
+    <div class="popup-ios-passo">
+      <span class="popup-ios-numero">2</span>
+
+      <span>
+        Escolha
+        <strong>Adicionar à Tela de Início</strong>
+      </span>
+    </div>
+
+    <div class="popup-ios-acoes">
+  <button
+    id="botao-agora-nao-popup-ios"
+    class="popup-ios-botao popup-ios-botao-secundario"
+    type="button"
+  >
+    Agora não
+  </button>
+
+  <button
+    id="botao-entendi-popup-ios"
+    class="popup-ios-botao popup-ios-botao-principal"
+    type="button"
+  >
+    Entendi
+  </button>
+</div>
+
+  </div>
+</div>
+  </body>
+</html>
