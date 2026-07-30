@@ -6,7 +6,7 @@ const URL_CONTROLE =
 const URL_LICENCIAMENTO =
   "https://script.google.com/macros/s/AKfycbwwm9HvLqcAuaw09ssIqZtvNastFXPdAHtPUBjtFZiME8bScF53TiAef6pqFxEENYHT/exec";
 
-const CARDAPIO_ID = "card_d149adf75270";
+const CARDAPIO_ID = "card_e96778b9de10";
 
 const CHAVE_SESSAO_VISITANTE =
   `sessaoVisitante_${CARDAPIO_ID}`;
@@ -3529,9 +3529,7 @@ document.addEventListener(
 
     setInterval(() => {
       Promise.all([
-        carregarControleProdutos(),
-        carregarCategoriasCardapio(),
-        carregarComplementosCardapio()
+        carregarDadosIniciaisCardapio()
       ])
         .then(() => {
 
